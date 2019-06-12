@@ -5,7 +5,8 @@ import {
   Redirect
 } from 'react-router-dom';
 import { routes } from './routes';
-import NavigationBar from './components/NavigationBar';
+import NavigationBar from './components/NavigationBar/NavigationBar';
+import styles from './app.less';
 
 const App = () => {
   const renderSwitch = () => (
@@ -24,9 +25,9 @@ const App = () => {
 
   return (
     <Router>
-      <main className='app-content'>
+      <main className={styles.appContent}>
         <NavigationBar routes={routes.filter(route => route.isNavBar)}/>
-        <div className='ui-content'>
+        <div className={styles.pageContent}>
           {renderSwitch()}
         </div>
       </main>

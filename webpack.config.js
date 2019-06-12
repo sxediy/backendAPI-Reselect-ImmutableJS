@@ -1,3 +1,4 @@
+
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
@@ -8,29 +9,32 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './src/ant-theme.less'), 'utf8'));
 
 module.exports = {
-  target: 'web',
   entry: { main: './src/index.js' },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
-    publicPath: '/',
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
       {
         test: [/\.js$/, /\.jsx$/],
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
+        use: ['babel-loader', 'eslint-loader']
       },
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
+        include: /node_modules/,
+        loader: ExtractTextPlugin.extract({
+          publicPath: '../',
           fallback: 'style-loader',
           use: [
-            'css-loader',
-            'less-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
+              }
+            },
             {
               loader: 'less-loader',
               options: {
@@ -38,13 +42,41 @@ module.exports = {
                 javascriptEnabled: true
               }
             }
-          ],
-        }),
+          ]
+        })
       },
       {
-        test: [/\.js$/, /\.jsx$/],
+        test: /\.less$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
+        loader: ExtractTextPlugin.extract({
+          publicPath: '../',
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'less-loader',
+              options: {
+                modifyVars: themeVariables,
+                javascriptEnabled: true
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-sprite-loader',
+          },
+        ],
       },
     ],
   },
@@ -54,7 +86,11 @@ module.exports = {
     overlay: true,
   },
   plugins: [
-    new ExtractTextPlugin({ filename: 'style.css' }),
+    new ExtractTextPlugin({
+      filename: 'bundle.css',
+      disable: false,
+      allChunks: true,
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
@@ -62,5 +98,5 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
     }),
-  ],
+  ]
 };
