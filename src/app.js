@@ -5,7 +5,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import { routes } from './routes';
-import NavigationBar from './components/navigationBar';
+import NavigationBar from './components/NavigationBar';
 
 const App = () => {
   const renderSwitch = () => (

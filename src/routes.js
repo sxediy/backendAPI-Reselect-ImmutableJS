@@ -1,5 +1,5 @@
-import History from './pages/history';
-import Main from './pages/main';
+import History from './pages/History';
+import Main from './pages/Main';
 
 export const routes = [
   {
