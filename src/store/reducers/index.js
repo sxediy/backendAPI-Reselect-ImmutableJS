@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import main from './main';
-import history from './history';
+import pictures from './pictures';
 
 export default combineReducers({
-  main,
-  history
+  pictures,
 });

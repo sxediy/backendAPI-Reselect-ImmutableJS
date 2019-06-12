@@ -15,7 +15,7 @@ const App = () => {
           key={route.path}
           exact={route.isExact}
           path={route.path}
-          component={route.isPrivate}
+          component={route.component}
         />
       ))}
       <Redirect from='*' to='/main' />
