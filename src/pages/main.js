@@ -11,7 +11,6 @@ const Main = ({ getPicture, currentPicData }) => {
   useEffect(() => {
     getPicture();
   }, []);
-  console.log('currentPicData', currentPicData);
   const url = currentPicData ? currentPicData.image_url : undefined;
 
   const renderPicture = () => (
