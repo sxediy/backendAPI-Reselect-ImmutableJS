@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { GET_PICTURESDATA } from 'store/actionTypes';
+import { REQUEST_CURRENT_PICTURE } from 'store/actionTypes';
 import { Button } from 'components/Button/Button';
 
 import { blue, bluelight, bluedark } from 'src/colors';
 import styles from './Main.less';
 
-const fetchURL = 'https://api.giphy.com/v1/gifs/random?api_key=xgcnvYuqk4vP1WQQtWPz6F1A0B4WHHdA';
-
-
-const Main = ({ getPicturesData, picturesData }) => {
+const Main = ({ getPicture, currentPicData }) => {
   useEffect(() => {
-    getPicturesData(fetchURL);
+    getPicture();
   }, []);
-  console.log('picturesData', picturesData);
-  const url = picturesData ? picturesData.image_url : undefined;
+  console.log('currentPicData', currentPicData);
+  const url = currentPicData ? currentPicData.image_url : undefined;
 
   const renderPicture = () => (
     <div className={styles.homeContainer}>
@@ -28,7 +25,8 @@ const Main = ({ getPicturesData, picturesData }) => {
           customHoverBackground={ bluelight }
           customPressBackground={ bluedark }
           size={'s'}
-          background = { blue }
+          background={ blue }
+          callbackFunction={ getPicture }
         />
       </div>
     </div>
@@ -43,20 +41,20 @@ const Main = ({ getPicturesData, picturesData }) => {
 };
 
 Main.propTypes = {
-  getPicturesData: PropTypes.func,
-  picturesData: PropTypes.object,
+  getPicture: PropTypes.func,
+  currentPicData: PropTypes.object,
 };
 
 
-const mapStateToProps = ({ pictures }) => (
+const mapStateToProps = ({ currentPic }) => (
   {
-    picturesData: pictures.data
+    currentPicData: currentPic.data
   }
 );
 
 const mapDispatchToProps = (dispatch) => (
   {
-    getPicturesData: () => dispatch({ type: GET_PICTURESDATA, payload: fetchURL })
+    getPicture: () => dispatch({ type: REQUEST_CURRENT_PICTURE })
   }
 );
 

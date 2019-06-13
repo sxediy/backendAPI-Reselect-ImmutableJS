@@ -12,13 +12,14 @@ function* picturesDataSaga() {
 
     const responseToJSON = yield call(getFetch, { ressoursePath, qsParams });
     if (responseToJSON && responseToJSON.meta && responseToJSON.meta.msg === 'OK') {
-      yield put({ type: 'PICTURESDATA_SUCCESS', payload: responseToJSON });
+      yield put({ type: 'RECEIVE_CURRENT_PICTURE', payload: responseToJSON });
+      yield put({ type: 'ADD_PICTURE_TO_HISTORY', payload: responseToJSON.data });
     }
   } catch (error) {
-    yield put({ type: 'PICTURESDATA_FAIL', payload: error.message, error: true });
+    yield put({ type: 'FAIL_CURRENT_PICTURE', payload: error.message, error: true });
   }
 }
 
 export default function* () {
-  yield takeLatest('GET_PICTURESDATA', picturesDataSaga);
+  yield takeLatest('REQUEST_CURRENT_PICTURE', picturesDataSaga);
 }
