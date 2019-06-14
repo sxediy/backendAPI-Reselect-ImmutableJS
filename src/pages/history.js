@@ -1,23 +1,24 @@
 import React from 'react';
+import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { REMOVE_PICTURE_FROM_HISTORY } from 'store/actionTypes';
 
 import styles from './History.less';
 
-const History = ({ removePicture, historyPic }) => {
-  console.log('historyPic', historyPic);
+const History = ({ removePicture, historyPictures }) => {
   const renderHistoryPic = () => (
     <div className={styles.historyContainer}>
       {
-        historyPic.map(pic => (
-          <div className={styles.picContainer} key={pic.id}>
+        historyPictures.map(picture => (
+          <div className={styles.picContainer} key={picture.id}>
             <div className={styles.imgContainer}>
-              <img align="left" src={pic.image_url} width="170px"/>
+              <img align="left" src={picture.image_url} width="170px"/>
+              <Icon type="delete" onClick = {() => removePicture(picture.id)}/>
             </div>
             <div className={styles.textContainer}>
-              <h3>{pic.title}</h3>
-              <p>{pic.import_datetime}</p>
+              <h3>{picture.title}</h3>
+              <p>{picture.import_datetime}</p>
             </div>
           </div>
         ))
@@ -25,31 +26,29 @@ const History = ({ removePicture, historyPic }) => {
     </div>
   );
 
-  console.log('removePicture', removePicture);
-
   return (
     <React.Fragment>
       <h1 className="home-header">История</h1>
-      {Array.isArray(historyPic) ? renderHistoryPic() : null}
+      {Array.isArray(historyPictures) ? renderHistoryPic() : null}
     </React.Fragment>
   );
 };
 
 History.propTypes = {
   removePicture: PropTypes.func,
-  historyPic: PropTypes.array,
+  historyPictures: PropTypes.array,
 };
 
 
-const mapStateToProps = ({ historyPic }) => (
+const mapStateToProps = ({ historyPictures }) => (
   {
-    historyPic
+    historyPictures
   }
 );
 
 const mapDispatchToProps = (dispatch) => (
   {
-    removePicture: () => dispatch({ type: REMOVE_PICTURE_FROM_HISTORY })
+    removePicture: (pictureID) => dispatch({ type: REMOVE_PICTURE_FROM_HISTORY, payload: pictureID })
   }
 );
 
