@@ -2,8 +2,7 @@
   "name": "megafon",
   "description": "тестовое задание",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sxediy/megafon.git"
+    "type": "git"
   },
   "author": "sxediy",
   "license": "MIT",
