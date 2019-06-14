@@ -32,10 +32,10 @@ const Main = ({ getPicture, currentPicData }) => {
   );
 
   return (
-    <React.Fragment>
+    <div className={styles.pageContainer}>
       <h1 className="home-header">Главная</h1>
       {url ? renderPicture() : null}
-    </React.Fragment>
+    </div>
   );
 };
 
