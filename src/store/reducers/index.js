@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 import currentPic from './currentPic';
 import historyPictures from './historyPictures';
 
-export default combineReducers({
+const rootreducer = combineReducers({
   currentPic,
   historyPictures,
 });
+
+export default rootreducer;

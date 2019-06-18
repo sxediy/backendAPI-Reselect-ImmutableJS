@@ -45,11 +45,12 @@ Main.propTypes = {
 };
 
 
-const mapStateToProps = ({ currentPic }) => (
+const mapStateToProps = (state) => (
   {
-    currentPicData: currentPic.data
+    currentPicData: state.get('currentPic').get('data'),
   }
 );
+
 
 const mapDispatchToProps = (dispatch) => (
   {

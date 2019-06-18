@@ -1,12 +1,13 @@
+import { Map } from 'immutable';
 import {
   RECEIVE_CURRENT_PICTURE,
   FAIL_CURRENT_PICTURE
 } from '../actionTypes';
 
-const currentPic = (state = {}, action) => {
+const currentPic = (state = Map({}), action) => {
   switch (action.type) {
     case RECEIVE_CURRENT_PICTURE:
-      return { ...state, ...action.payload };
+      return state.merge(action.payload);
     case FAIL_CURRENT_PICTURE:
       return { errorMessage: action.payload };
     default:

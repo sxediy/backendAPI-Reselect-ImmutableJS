@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 
-const getFilterByCurrentYear = state => (state.currentPic.data
-  ? state.currentPic.data.import_datetime.slice(0, 4) : undefined);
+const getFilterByCurrentYear = state => (state.get('currentPic').get('data')
+  ? state.get('currentPic').get('data').import_datetime.slice(0, 4) : undefined);
 
-const getHistoryPictures = state => state.historyPictures;
+
+const getHistoryPictures = state => state.get('historyPictures');
 
 const getFilteredHistoryPictures = createSelector(
   [getFilterByCurrentYear, getHistoryPictures],

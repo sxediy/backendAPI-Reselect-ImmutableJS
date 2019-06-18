@@ -11,7 +11,8 @@ const History = ({ removePicture, historyPictures, currentYear }) => {
   const [currentPage, setNewCurrentPage] = useState(1);
   const from = pageSize * (currentPage - 1);
   const to = pageSize * currentPage;
-  const historyPicturesOnCurrentPage = historyPictures.slice(from, to);
+  const arrayHistoryPictures = Array.from(historyPictures);
+  const historyPicturesOnCurrentPage = arrayHistoryPictures.slice(from, to);
   if (historyPicturesOnCurrentPage.length === 0 && currentPage > 1) {
     setNewCurrentPage(currentPage - 1);
   }
@@ -38,7 +39,7 @@ const History = ({ removePicture, historyPictures, currentYear }) => {
         <Pagination
           current={currentPage}
           pageSize={pageSize}
-          total={historyPictures.length}
+          total={arrayHistoryPictures.length}
           hideOnSinglePage
           onChange={(newCurrentPage) => setNewCurrentPage(newCurrentPage)}
         />
@@ -60,14 +61,14 @@ const History = ({ removePicture, historyPictures, currentYear }) => {
 
   return (
     <div className={styles.pageContainer}>
-      {historyPictures.length > 0 ? renderHistoryPic() : renderEmpty()}
+      {arrayHistoryPictures.length > 0 ? renderHistoryPic() : renderEmpty()}
     </div>
   );
 };
 
 History.propTypes = {
   removePicture: PropTypes.func,
-  historyPictures: PropTypes.array,
+  historyPictures: PropTypes.object,
   currentYear: PropTypes.string,
 };
 
