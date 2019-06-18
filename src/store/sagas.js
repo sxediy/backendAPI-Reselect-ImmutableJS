@@ -4,8 +4,6 @@ import { getFetch } from '../service/restAPI';
 
 function* picturesDataSaga() {
   try {
-    // селектор в стейт, там уже есть урл, прилетевший из компонента
-
     const ressoursePath = 'gifs/random';
     const qsParams = 'api_key=xgcnvYuqk4vP1WQQtWPz6F1A0B4WHHdA';
 

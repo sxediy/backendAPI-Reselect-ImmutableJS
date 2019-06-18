@@ -3,9 +3,10 @@ import { Icon, Empty, Pagination } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { REMOVE_PICTURE_FROM_HISTORY } from 'store/actionTypes';
+import { getFilteredHistoryPictures, getCurrentYear } from 'selectors/historySelectors';
 import styles from './History.less';
 
-const History = ({ removePicture, historyPictures }) => {
+const History = ({ removePicture, historyPictures, currentYear }) => {
   const pageSize = 5;
   const [currentPage, setNewCurrentPage] = useState(1);
   const from = pageSize * (currentPage - 1);
@@ -17,6 +18,7 @@ const History = ({ removePicture, historyPictures }) => {
 
   const renderHistoryPic = () => (
     <Fragment>
+      <h1 className="home-header">{`История за ${currentYear} год`}</h1>
       <div className={styles.historyContainer}>
         {
           historyPicturesOnCurrentPage
@@ -58,7 +60,6 @@ const History = ({ removePicture, historyPictures }) => {
 
   return (
     <div className={styles.pageContainer}>
-      <h1 className="home-header">История</h1>
       {historyPictures.length > 0 ? renderHistoryPic() : renderEmpty()}
     </div>
   );
@@ -67,14 +68,14 @@ const History = ({ removePicture, historyPictures }) => {
 History.propTypes = {
   removePicture: PropTypes.func,
   historyPictures: PropTypes.array,
+  currentYear: PropTypes.string,
 };
 
 
-const mapStateToProps = ({ historyPictures }) => (
-  {
-    historyPictures
-  }
-);
+const mapStateToProps = (state) => ({
+  historyPictures: getFilteredHistoryPictures(state),
+  currentYear: getCurrentYear(state)
+});
 
 const mapDispatchToProps = (dispatch) => (
   {

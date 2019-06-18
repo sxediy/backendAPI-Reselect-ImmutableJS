@@ -25,6 +25,7 @@
         "alias": {
           "components": "./src/components",
           "pages": "./src/pages",
+          "selectors": "./src/selectors",
           "services": "./src/services",
           "store": "./src/store",
           "src": "./src"
